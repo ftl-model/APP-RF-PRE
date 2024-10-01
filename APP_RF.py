@@ -78,26 +78,26 @@ if st.button("Predict"):
     st.image("shap_force_plot.png", caption='SHAP Force Plot Explanation')
 
 # SHAP Explanation    
-st.subheader("SHAP Waterfall Plot Explanation")    
-explainer_shap = shap.TreeExplainer(model)    
+    st.subheader("SHAP Waterfall Plot Explanation")    
+    explainer_shap = shap.TreeExplainer(model)    
 
 # 使用标准化后的特征来计算SHAP值
-shap_values = explainer_shap.shap_values(pd.DataFrame(standardized_features, columns=feature_names))    
+    shap_values = explainer_shap.shap_values(pd.DataFrame(standardized_features, columns=feature_names))    
 
 # 将标准化前的原始数据存储在变量中
-original_feature_values = pd.DataFrame(features, columns=feature_names)
+    original_feature_values = pd.DataFrame(features, columns=feature_names)
 
 # Display the SHAP waterfall plot for the predicted class    
-if predicted_class == 1:        
-    shap.waterfall_plot(shap.Explanation(values=shap_values[1], 
+    if predicted_class == 1:        
+        shap.waterfall_plot(shap.Explanation(values=shap_values[1], 
                                           base_values=explainer_shap.expected_value[1],
                                           data=original_feature_values.values[0], 
                                           feature_names=feature_names))
-else:        
-    shap.waterfall_plot(shap.Explanation(values=shap_values[0], 
+    else:        
+        shap.waterfall_plot(shap.Explanation(values=shap_values[0], 
                                           base_values=explainer_shap.expected_value[0],
                                           data=original_feature_values.values[0], 
                                           feature_names=feature_names))
 
-plt.savefig("shap_waterfall_plot.png", bbox_inches='tight', dpi=1200)    
-st.image("shap_waterfall_plot.png", caption='SHAP Waterfall Plot Explanation')
+    plt.savefig("shap_waterfall_plot.png", bbox_inches='tight', dpi=1200)    
+    st.image("shap_waterfall_plot.png", caption='SHAP Waterfall Plot Explanation')
